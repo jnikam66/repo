@@ -1,0 +1,36 @@
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+  http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+	version="2.1">
+	<persistence-unit name="jpa-inventory" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		<properties>
+			<!-- Database connection settings -->
+			<property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:h2:~/test"/>
+			<property name="javax.persistence.jdbc.user" value="sa"/>
+			<property name="javax.persistence.jdbc.password" value=""/>
+			
+			
+			
+			<!-- <property name="hibernate.default_schema" value="PUBLIC"/>
+			JDBC connection pool (use the built-in)
+			<property name="connection.pool_size" value = "1"/>
+			SQL dialect
+			<property name="dialect" value="org.hibernate.dialect.H2Dialect"/>
+			Disable the second-level cache
+			<property name="cache.provider_class" value="org.hibernate.cache.internal.NoCacheProvider"/>
+			Echo all executed SQL to stdout 	
+			<property name="show_sql" value="true"/>
+			Drop and re-create the database schema on startup
+			<property name="hbm2ddl.auto" value="create"/> -->
+			
+			<property name="hibernate.archive.autodetection" value="class" />
+			<property name="dialect" value="org.hibernate.dialect.H2Dialect" />
+			<!-- <property name="hibernate.show_sql" value="true"/> -->
+			<property name="hibernate.flushMode" value="FLUSH_AUTO" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+		</properties>
+	</persistence-unit>
+</persistence> 
