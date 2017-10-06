@@ -1,6 +1,7 @@
 package rest;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -12,20 +13,20 @@ import javax.ws.rs.PathParam;
 
 @Path("/authenticate")
 public class AuthenticateService {
-	EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa-inventory"); 
+	EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa-inventory");
 
-	
 	@GET
-		@Path("/{username}/{password}")
-	       public Boolean authenticateUser(@PathParam("username") String username,@PathParam("password") String password ) throws ClassNotFoundException, SQLException {
-	             EntityManager entityManager = emf.createEntityManager();
-	             Query query = entityManager.createNativeQuery("select l.password from login l where l.username = :username");
-	             query.setParameter("username", username.toUpperCase());
-	             if(query.getResultList().get(0) == password) {
-	            	 return true;
-	             }else {
-	            	 return false;
-	             }
-	             
-	       } 
+	@Path("/{username}/{password}")
+	public Boolean authenticateUser(@PathParam("username") String username, @PathParam("password") String password)
+			throws ClassNotFoundException, SQLException {
+		EntityManager entityManager = emf.createEntityManager();
+		Query query = entityManager.createNativeQuery("select l.password from login l where l.username = :username");
+		query.setParameter("username", username.toUpperCase());
+		if (query.getResultList().get(0).toString().equals(password.toUpperCase())) {
+			return true;
+		} else {
+			return false;
+		}
+
 	}
+}
