@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+
 @Component({
   selector: 'jyoti',
   templateUrl: './dashboard.component.html',
@@ -7,10 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
 
   }
+  
 
 }

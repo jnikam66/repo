@@ -1,22 +1,20 @@
-
+.container-fluid{
+  height:68px;
+}
 .navbar-brand {
   padding: 0px;
 }
 .navbar-brand>img {
-  height: 100%;
-  padding: 15px;
+  height: 137%;
   width: auto;
 	padding: 7px 15px;
 }
-.carousel-inner{
-	  background-color: #1287ec;
-}
-.row{
-  padding: 22px;
-  background: black;
-  margin-right: 85px;
-  margin-left: -1px;
-  width: 100.1%;
+.signup{
+background-color: #5bc0de;
+padding-top: 1px;
+padding-left: 57px;
+padding-right: 354px;
+padding-bottom: 17px;
 }
 .footer_logo_img{
   padding-top: 30px;
@@ -25,14 +23,14 @@
 .title{
   float: right;
     margin-right: 32%;
-    margin-top: -11%;
+    margin-top: -8%;
     color : white;
 }
 .footer_contact{
   float: right;
   margin-top: -55px;
   margin-bottom: 20px;
-  margin-right: 144px;
+  margin-right: 241px;
   color:white;
 }
 .copyright{
