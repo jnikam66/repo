@@ -1,0 +1,40 @@
+.container-fluid{
+  height:68px;
+}
+.navbar-brand {
+  padding: 0px;
+}
+.navbar-brand>img {
+  height: 137%;
+  width: auto;
+	padding: 7px 15px;
+}
+.signup{
+background-color: #5bc0de;
+padding-top: 1px;
+padding-left: 57px;
+padding-right: 354px;
+padding-bottom: 17px;
+}
+.footer_logo_img{
+  padding-top: 30px;
+  block-size: 131px;
+}
+.title{
+  float: right;
+    margin-right: 32%;
+    margin-top: -8%;
+    color : white;
+}
+.footer_contact{
+  float: right;
+  margin-top: -55px;
+  margin-bottom: 20px;
+  margin-right: 241px;
+  color:white;
+}
+.copyright{
+  margin-top: 52px;
+  font-size: 12px;
+  color:antiquewhite
+}
