@@ -7,19 +7,22 @@ import { DashboardService} from './dashboard.service'
   styleUrls: ['./dashboard.component.css'],
   providers:[DashboardService]
 })
-export class DashboardComponent implements OnInit {
 
+export class DashboardComponent implements OnInit {
+	loggedIn: boolean;
   constructor(private dashboardService : DashboardService) {}
 
   ngOnInit() {
 
   }
   authenticate(){
-    if(this.dashboardService.authenticate("jyoti","password")){
-     console.log("login successful");
-    }else{
-     console.log("Login unsuccessful");
-    }
+		this.dashboardService.isAuthenticate()
+                           .subscribe(
+                               loggedIn => this.loggedIn = loggedIn, //Bind to view
+                                err => {
+                                    // Log errors if any
+                                    console.log(err);
+                                });
   }
 
 
