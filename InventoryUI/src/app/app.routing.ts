@@ -4,11 +4,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component'
 import { LoginComponent }  from './login/login.component';
 import { RegisterComponent } from './register/register.component'
-
+import { InventoryComponent } from './features/inventory/inventory.component'
 export const AppRoutes: any = [
     {path: '' , component : DashboardComponent },
     { path: 'login', component: LoginComponent },
-    { path : 'register', component : RegisterComponent}
+    { path : 'register', component : RegisterComponent },
+    { path : 'inventory', component : InventoryComponent }
 ];
 
 export const AppComponents: any = [
