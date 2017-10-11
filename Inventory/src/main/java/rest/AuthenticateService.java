@@ -7,10 +7,12 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.transaction.SystemException;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.core.MediaType;
 import javax.transaction.Transactional; 
 
 import Entities.UserEntity;
@@ -36,6 +38,7 @@ public class AuthenticateService {
 	@Transactional() 
 	@POST	
 	@Path("/register/")
+	@Consumes(MediaType.APPLICATION_JSON)
 	//@Path("/register/{username}/{password}")
 	//public String register(@PathParam("username") String email, @PathParam("password") String password)
 			//throws Exception, SecurityException, SystemException {
