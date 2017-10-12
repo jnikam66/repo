@@ -6,6 +6,7 @@ import { FeaturesComponent } from './features.component'
 import { HeaderComponent } from './header/header.component'
 import { InventoryComponent } from './inventory/inventory.component';
 import { ReportsComponent } from './reports/reports.component';
+import { FooterComponent } from './footer/footer.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ declarations: [
   FeaturesComponent,
   HeaderComponent,
   InventoryComponent,
-  ReportsComponent
+  ReportsComponent,
+  FooterComponent
 ]
 })
 export class FeaturesModule { }
