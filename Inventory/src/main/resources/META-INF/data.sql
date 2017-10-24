@@ -68,6 +68,9 @@ insert into user (username, password, accesslevel, email, company, country, isAc
 insert into user (username, password, accesslevel, email, company, country, isActive, profilepicture, contactno, hashkey) values ('cprovis1v', 'k3aAejk6Azca', 'Employee', 'mjennions1v@shutterfly.com', 'Trunyx', 'Russia', 1, null, '463-572-5165', '377e94fc5e41a11a7357eed073d4c3d6f1d1a9ce8a0157cad215b8b2b489e639');
 
 
+insert into inventory (inventoryid,inventoryname,numberofitems,location,createdby,lastupdatedby,country,company)values ('1','screen','94','Oklahoma','wsurpliss0','wsurpliss0','Indonesia','Riffpath');
+insert into inventory (inventoryid,inventoryname,numberofitems,location,createdby,lastupdatedby,country,company)values ('2','monitor','91','Oklahoma','wsurpliss0','wsurpliss0','Indonesia','Riffpath');
+insert into inventory (inventoryid,inventoryname,numberofitems,location,createdby,lastupdatedby,country,company)values ('3','hdmi','9','Oklahoma','wsurpliss0','wsurpliss0','Indonesia','Riffpath');
 
 
 INSERT INTO inventoryitem (itemid,inventoryid,itemname,Description,itemgroup,quantity,Location,unitofmeasure,costperunit,status,createddate,Expirationdate) values ('1','6','Dell Wifi router','','computer accessories','50','Illinois','','50','In Stock','1/17/2017','10/7/2020'
