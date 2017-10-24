@@ -4,7 +4,9 @@
   http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
 	version="2.1">
 	<persistence-unit name="jpa-inventory" transaction-type="RESOURCE_LOCAL">
-		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		 <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider> 
+		<!-- <provider>org.hibernate.ejb.HibernatePersistence</provider> -->
+		<!--<exclude-unlisted-classes>false</exclude-unlisted-classes>-->
 		<properties>
 			<!-- Database connection settings -->
 			<property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
@@ -15,6 +17,9 @@
 			<property name="dialect" value="org.hibernate.dialect.H2Dialect" />
 			<property name="hibernate.flushMode" value="FLUSH_AUTO" />
 			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="javax.persistence.schema-generation.create-script-source" value="META-INF/create.sql"/> 
+            <property name="javax.persistence.schema-generation.drop-script-source" value="META-INF/drop.sql"/> 
+            <property name="javax.persistence.sql-load-script-source" value="META-INF/data.sql"/> 
 		</properties>
 	</persistence-unit>
 </persistence> 
