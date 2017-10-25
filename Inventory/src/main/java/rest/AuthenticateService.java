@@ -5,76 +5,76 @@ import java.sql.SQLException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
 import javax.transaction.SystemException;
+import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
-import javax.transaction.Transactional; 
 
-import Entities.UserEntity;
+import entities.UserEntity;
 
 @Path("/userServices")
 public class AuthenticateService {
-	EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa-inventory");
-	EntityManager entityManager = emf.createEntityManager();
+        EntityManagerFactory emf = Persistence
+                        .createEntityManagerFactory("jpa-inventory");
+        EntityManager entityManager = emf.createEntityManager();
 
-	@GET
-	@Path("/authenticate/{username}/{password}")
-	public Boolean authenticateUser(@PathParam("username") String username, @PathParam("password") String password)
-			throws ClassNotFoundException, SQLException {
-		Query query = entityManager.createNativeQuery("select l.password from login l where l.username = :username");
-		query.setParameter("username", username.toUpperCase());
-		if (query.getResultList().get(0).toString().equals(password.toUpperCase())) {
-			return true;
-		} else {
-			return false;
-		}
+        @GET
+        @Path("/authenticate/{username}/{password}")
+        public Boolean authenticateUser(@PathParam("username") String username,
+                        @PathParam("password") String password)
+                        throws ClassNotFoundException, SQLException {
+        	UserEntity user = entityManager.find(UserEntity.class, username);
+                //TODO Null check on user.getPassword() before comparing
+                if (password.equals(user.getPassword())) {
+                        return true;
+                } else {
+                        return false;
+                }
 
-	}
-	@Transactional() 
-	@POST	
-	@Path("/register/")
-	@Consumes(MediaType.APPLICATION_JSON)
-	//@Path("/register/{username}/{password}")
-	//public String register(@PathParam("username") String email, @PathParam("password") String password)
-			//throws Exception, SecurityException, SystemException {
-	public String register(UserEntity userEntityRecord) throws Exception, SecurityException, SystemException {
-		String result = "Registering User...";
-		try {
-			entityManager.getTransaction().begin(); 
-			
-			/*UserEntity userRec = new UserEntity();
-			userRec = entityManager.find(User.class,userEntityRecord.getUsername());
-			if(userRec!=null){
-				result = "Duplicate user!!";
-			}else{
-				*/
-				entityManager.persist(userEntityRecord); 
-				entityManager.getTransaction().commit();
-				result = "Transaction Complete";
-			//}
-			entityManager.close();
-			
-			/*
-			Query query = entityManager.createNativeQuery(	"insert into login(id,username,password) values(?,?,?)");
-			query.setParameter(1, 10);
-			query.setParameter(2, email);
-			query.setParameter(3, password);
-			if (query.executeUpdate() > 0) {
-				result = "Transaction Complete";
-			}
-			entityManager.getTransaction().commit();
-		    entityManager.close(); 
-			*/
-		     
-		} catch (Exception e) {
-			e.printStackTrace();
-			result = e.getMessage();
-		}
-		return result;
-	}
+        }
+
+        @Transactional
+        @POST
+        @Path("/register")
+        @Consumes(MediaType.APPLICATION_JSON)
+        public String register(UserEntity userEntityRecord) throws Exception,
+                        SecurityException, SystemException {
+                String result = "Registering User...";
+                try {
+                        entityManager.getTransaction().begin();
+                        entityManager.persist(userEntityRecord);
+                        entityManager.getTransaction().commit();
+                        result = "Transaction Complete";
+
+                } catch (Exception e) {
+                        e.printStackTrace();
+                        result = e.getMessage();
+                }
+                return result;
+        }
+
+        @Transactional
+        @PUT
+        @Path("/update/{username}")
+        @Consumes(MediaType.APPLICATION_JSON)
+        public String editRegister(@PathParam("username") String username,
+        		UserEntity userEntityRecord) throws Exception, SecurityException,
+                        SystemException {
+                String result = "Updating User...";
+                UserEntity user = entityManager.find(UserEntity.class, username);
+                entityManager.getTransaction().begin();
+
+                //TODO set all the fields that come from ui to entity object
+                user.setCompany(userEntityRecord.getAccessLevel());
+
+                entityManager.getTransaction().commit();
+
+                result = "Transaction Complete";
+                return result;
+        }
 }
