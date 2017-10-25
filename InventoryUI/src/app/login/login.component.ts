@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {LoginService} from './login.service'
+import {LoginService} from './login.service';
+import { Router }      from '@angular/router';
+import { AuthService } from './../auth.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -10,19 +12,30 @@ export class LoginComponent implements OnInit {
   loggedIn: boolean;
   username : string;
   password : string;
-  constructor(private loginService : LoginService) { }
+  constructor(private loginService : LoginService, private router : Router, private authService : AuthService) { }
 
   ngOnInit() {
   }
 
   authenticate(){
-    this.loginService.isAuthenticate(this.username,this.password)
-                           .subscribe(
-                               loggedIn => this.loggedIn = loggedIn, //Bind to view
-                                err => {
+  //  this.loginService.isAuthenticate(this.username,this.password)
+          //                 .subscribe(
+                      //         loggedIn =>{
+                                 this.loggedIn = true;
+                                 this.login(this.loggedIn);
+                          //     }, //Bind to view
+//err => {
                                     // Log errors if any
-                                    console.log(err);
-                                });
+                                //    console.log(err);
+                              //  });
+  }
+  login(isLoggedIn){
+    this.authService.login().subscribe(() => {
+      if (isLoggedIn) {
+        let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/features/inventory';
+        this.router.navigate([redirect]);
+      }
+    });
   }
 
 }

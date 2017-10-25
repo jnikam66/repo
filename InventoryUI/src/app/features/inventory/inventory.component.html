@@ -1,18 +1,73 @@
-<table class="table">
+<div class="container example2">
+<div class="row"style = "padding-top: 68px;padding-bottom: 5px; padding-left: 10px;">
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Inventory</button>
+  <input type="text" name="search" style="margin-left: 14%;
+    width: 43%;
+    margin-top: -32px;" class="input-group form-control" id="search">
+  <button type="button" class="btn btn-primary" style = "    float: right;
+    margin-top: -34px;
+
+    margin-right: 36%;">Search</button>
+
+</div>
+<div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modal Header</h4>
+      </div>
+      <div class="modal-body">
+        <label for="itemName">Item Name:</label>
+        <input type="text" name="itemName" class="form-control" id="itemName">
+        <label for="quantity">Quantity:</label>
+        <input type="text" name="quantity" class="form-control" id="quantity">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Unit of Measure<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li *ngFor="let item of data">
+              <a href>{{item.name}}</a>
+            </li>
+          </ul>
+        </li>
+        <label for="quantity">Item Description:</label>
+        <input type="text" name="description" class="form-control" id="description">
+        <label for="location">Location:</label>
+        <input type="text" name="location" class="form-control" id="location">
+        <label for="costperunit">Cost per Unit:</label>
+        <input type="text" name="costperunit" class="form-control" id="costperunit">
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" >Save</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<table class="table table-bordered">
   <thead>
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">First Name</th>
-      <th scope="col">Last Name</th>
-      <th scope="col">Username</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Unit of Measurement</th>
+      <th scope="col">Item Name</th>
+      <th scope="col">Item Description</th>
+      <th scope="col">Location</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let item of data">
-          <td>{{item.name}}</td>
-          <td>{{item.email}}</td>
-          <td class="text-right">{{item.age}}</td>
-          <td>{{item.city | uppercase}}</td>
-      </tr>
+      <td>{{item.quantity}}</td>
+      <td>{{item.uOM}}</td>
+      <td>{{item.name}}</td>
+      <td>{{item.description}}</td>
+      <td>{{item.location}}</td>
+    </tr>
   </tbody>
 </table>
+
+</div>
