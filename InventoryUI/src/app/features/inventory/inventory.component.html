@@ -27,7 +27,7 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Unit of Measure<span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li *ngFor="let item of data">
+            <li *ngFor="let item of idata">
               <a href>{{item.name}}</a>
             </li>
           </ul>
@@ -49,6 +49,7 @@
   </div>
 </div>
 
+
 <table class="table table-bordered">
   <thead>
     <tr>
@@ -60,7 +61,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let item of data">
+    <tr *ngFor="let item of idata">
       <td>{{item.quantity}}</td>
       <td>{{item.uOM}}</td>
       <td>{{item.name}}</td>
@@ -69,5 +70,21 @@
     </tr>
   </tbody>
 </table>
+
+<div class="row">
+  <div class="col-md-4">
+    <input *ngIf="config.filtering" placeholder="Filter all columns"
+           [ngTableFiltering]="config.filtering"
+           class="form-control"
+           (tableChanged)="onChangeTable(config)"/>
+  </div>
+</div>
+<br>
+<ng-table [config]="config"
+          (tableChanged)="onChangeTable(config)"
+          (cellClicked)="onCellClick($event)"
+          [rows]="rows" [columns]="columns">
+</ng-table>>
+
 
 </div>
