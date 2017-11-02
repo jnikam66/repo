@@ -1,0 +1,25 @@
+.navbar-brand {
+  padding: 0px;
+}
+.navbar-brand>img {
+  height: 137%;
+  width: auto;
+	padding: 7px 15px;
+}
+
+.table {
+  padding-left: 120px;
+  padding-right: 120px;
+}
+
+.table tbody {
+#  box-shadow: 7px 7px 5px #888888;
+}
+
+.background {
+  background: linear-gradient(315deg, transparent 75%, #48D1CC 0)-10px 0,
+      linear-gradient(45deg, transparent 75%, #48D1CC 0)-10px 0,
+      linear-gradient(135deg, #48D1CC 50%, transparent 0) 0 0,
+      linear-gradient(45deg, #6a201b 50%, #561a16 0) 0 0 #561a16;
+      background-size: 20px 20px;
+}
