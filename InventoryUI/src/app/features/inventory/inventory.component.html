@@ -1,90 +1,73 @@
 <div class="container example2">
-<div class="row"style = "padding-top: 68px;padding-bottom: 5px; padding-left: 10px;">
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Inventory</button>
-  <input type="text" name="search" style="margin-left: 14%;
-    width: 43%;
-    margin-top: -32px;" class="input-group form-control" id="search">
-  <button type="button" class="btn btn-primary" style = "    float: right;
-    margin-top: -34px;
+  <div class="row" style="padding-top: 68px;padding-bottom: 5px; padding-left: 10px;">
 
-    margin-right: 36%;">Search</button>
+  </div>
+  <button type="button" style="margin-top: 4px;float: right;" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Inventory</button>
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
 
-</div>
-<div class="modal fade" id="myModal" role="dialog">
-  <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Header</h4>
+        </div>
+        <div class="modal-body">
+          <label for="itemName">Item Name:</label>
+          <input type="text" name="itemName" class="form-control" id="itemName">
+          <label for="quantity">Quantity:</label>
+          <input type="text" name="quantity" class="form-control" id="quantity">
+          <!--<div class="btn-group">
+          <div class="dropdown btn-group">
+            <button class="btn btn-primary btn-xs dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Select unit of Measurement<i class="fa fa-caret-down"></i></button>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Menu 1</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Menu 1</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Menu 1</a></li>
+              </ul>
+            </div>
+          </div>-->
+          <div class="form-group col-sm-12 col-md-4"><label style="margin-left: -17px;">Unit of Meausrement</label>
+            <div class="input-group">
+              <span class="input-group-addon"><i class="fa fa-street-view"></i></span>
+              <select class="form-control" id="cardTypes" formControlName="cardTypes">
+                <option *ngFor="let unitOfMeasurement of unitsOfMeasurement">{{unitOfMeasurement}}</option>
+              </select>
+            </div>
+          </div>
 
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Modal Header</h4>
+          <label for="quantity" style ="margin-left: -192px; margin-top: 61px;">Item Description:</label>
+          <input type="text" name="description" class="form-control" id="description">
+          <label for="location">Location:</label>
+          <input type="text" name="location" class="form-control" id="location">
+          <label for="costperunit">Cost per Unit:</label>
+          <input type="text" name="costperunit" class="form-control" id="costperunit">
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default ">Save</button>
+          <button type="button" class="btn btn-default" (click)="saveNewInventory()" data-dismiss="modal">Close</button>
+        </div>
       </div>
-      <div class="modal-body">
-        <label for="itemName">Item Name:</label>
-        <input type="text" name="itemName" class="form-control" id="itemName">
-        <label for="quantity">Quantity:</label>
-        <input type="text" name="quantity" class="form-control" id="quantity">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Unit of Measure<span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li *ngFor="let item of idata">
-              <a href>{{item.name}}</a>
-            </li>
-          </ul>
-        </li>
-        <label for="quantity">Item Description:</label>
-        <input type="text" name="description" class="form-control" id="description">
-        <label for="location">Location:</label>
-        <input type="text" name="location" class="form-control" id="location">
-        <label for="costperunit">Cost per Unit:</label>
-        <input type="text" name="costperunit" class="form-control" id="costperunit">
 
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" >Save</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
     </div>
-
   </div>
-</div>
 
 
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th scope="col">Quantity</th>
-      <th scope="col">Unit of Measurement</th>
-      <th scope="col">Item Name</th>
-      <th scope="col">Item Description</th>
-      <th scope="col">Location</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let item of idata">
-      <td>{{item.quantity}}</td>
-      <td>{{item.uOM}}</td>
-      <td>{{item.name}}</td>
-      <td>{{item.description}}</td>
-      <td>{{item.location}}</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="row">
-  <div class="col-md-4">
-    <input *ngIf="config.filtering" placeholder="Filter all columns"
-           [ngTableFiltering]="config.filtering"
-           class="form-control"
-           (tableChanged)="onChangeTable(config)"/>
+  <div class="row">
+    <div class="col-md-4">
+      <input *ngIf="config.filtering" placeholder="Filter all columns" [ngTableFiltering]="config.filtering" class="form-control" (tableChanged)="onChangeTable(config)" />
+    </div>
   </div>
+  <br>
+  <div class="scroll">
+  <ng-table [config]="config"
+            (tableChanged)="onChangeTable(config)"
+            (cellClicked)="onCellClick($event)"
+            (actionsclicked)="onActionClick($event)"
+            [rows]="rows" [columns]="columns">
+  </ng-table>
 </div>
-<br>
-<ng-table [config]="config"
-          (tableChanged)="onChangeTable(config)"
-          (cellClicked)="onCellClick($event)"
-          [rows]="rows" [columns]="columns">
-</ng-table>>
 
 
 </div>
