@@ -8,18 +8,20 @@ import { InventoryComponent } from './features/inventory/inventory.component'
 import { FeaturesComponent } from './features/features.component'
 import { ReportsComponent } from './features/reports/reports.component'
 import { AdminComponent } from './features/admin/admin.component'
-
+import {HomepageComponent} from './features/homepage/homepage.component'
 export const AppRoutes: any = [
     {path: '' , component : DashboardComponent },
     { path: 'login', component: LoginComponent },
     { path : 'register', component : RegisterComponent },
     //{ path : 'features', component : FeaturesComponent},
     { path : 'reports', component :ReportsComponent},
-    { path: 'admin', component: AdminComponent },
+
 	{ path: 'features', component: FeaturesComponent, canActivate: [AuthGuard],
 		children: [
-		  { path: '', redirectTo: 'inventory', pathMatch: 'full' },
-		  { path: 'inventory', component: InventoryComponent }
+		  { path: '', redirectTo: 'inventoryList', pathMatch: 'full' },
+		  { path: 'inventory', component: InventoryComponent },
+      { path: 'admin', component: AdminComponent },
+      { path: 'inventoryList', component: HomepageComponent}
     ]
   }
 ];

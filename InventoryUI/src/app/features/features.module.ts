@@ -9,14 +9,21 @@ import { InventoryComponent } from './inventory/inventory.component';
 import { ReportsComponent } from './reports/reports.component';
 import { FooterComponent } from './footer/footer.component';
 import { AdminComponent } from './admin/admin.component';
-
-
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule }   from '@angular/forms';
+import {ButtonModule} from 'primeng/primeng';
+import { HomepageComponent } from './homepage/homepage.component';
+import {DataGridModule} from 'primeng/primeng';
 @NgModule({
 imports: [
   CommonModule,
   DataTableModule,
   SharedModule,
   RouterModule,
+  BrowserModule,
+  ButtonModule,
+  FormsModule,
+  DataGridModule,
   RouterModule.forChild(AppRoutes)
 ],
 declarations: [
@@ -25,7 +32,8 @@ declarations: [
   InventoryComponent,
   ReportsComponent,
   FooterComponent,
-  AdminComponent
+  AdminComponent,
+  HomepageComponent
 ]
 })
 export class FeaturesModule { }

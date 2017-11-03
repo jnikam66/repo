@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
-
+import { FormsModule }   from '@angular/forms';
 
 @Component({
   selector: 'app-inventory',
@@ -17,6 +17,15 @@ export class InventoryComponent implements OnInit {
     'And another choice for you.',
     'but wait! A third!'
   ];
+  private model: Array<any> = [{
+    quantity: '',
+    unitOfMeasurement: '',
+    itemName: '',
+    description: '',
+    location: '',
+    status:'',
+    costPerUnit : ''
+  }]
   private data: Array<any> = [{
     quantity: '2',
     unitOfMeasurement: 'asd',
@@ -34,6 +43,13 @@ export class InventoryComponent implements OnInit {
   }];
   public constructor() {
 
+  }
+  public saveNewInventory(){
+    this.model;
+    console.log("Saving");
+  }
+  updateRecord(row){
+    console.log("Updating");
   }
 
   public ngOnInit(): void {
