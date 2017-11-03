@@ -1,19 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Ng2TableModule  } from 'ng2-table/ng2-table';
 import { RouterModule } from "@angular/router";
+import {DataTableModule,SharedModule} from 'primeng/primeng';
 import { FeaturesComponent } from './features.component';
 import { HeaderComponent } from './header/header.component';
 import {  AppRoutes} from "../app.routing";
 import { InventoryComponent } from './inventory/inventory.component';
 import { ReportsComponent } from './reports/reports.component';
 import { FooterComponent } from './footer/footer.component';
+import { AdminComponent } from './admin/admin.component';
 
 
 @NgModule({
 imports: [
   CommonModule,
-  Ng2TableModule,
+  DataTableModule,
+  SharedModule,
   RouterModule,
   RouterModule.forChild(AppRoutes)
 ],
@@ -22,7 +24,8 @@ declarations: [
   HeaderComponent,
   InventoryComponent,
   ReportsComponent,
-  FooterComponent
+  FooterComponent,
+  AdminComponent
 ]
 })
 export class FeaturesModule { }

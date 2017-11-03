@@ -45,8 +45,8 @@
 
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default ">Save</button>
-          <button type="button" class="btn btn-default" (click)="saveNewInventory()" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-default" (click)="saveNewInventory()">Save</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
 
@@ -54,7 +54,7 @@
   </div>
 
 
-  <div class="row">
+<!--  <div class="row">
     <div class="col-md-4">
       <input *ngIf="config.filtering" placeholder="Filter all columns" [ngTableFiltering]="config.filtering" class="form-control" (tableChanged)="onChangeTable(config)" />
     </div>
@@ -67,7 +67,26 @@
             (actionsclicked)="onActionClick($event)"
             [rows]="rows" [columns]="columns">
   </ng-table>
+</div> -->
+
+<div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+    <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+    <input #gb type="text" pInputText size="50" placeholder="Global Filter">
 </div>
+<p-dataTable [value]="data" [globalFilter]="gb" #dt>
+    <p-column field="itemName" header="Item Name" [filter]="true" filterPlaceholder="Search"></p-column>
+    <p-column field="itemDescription" header="Item description" [filter]="true" filterMatchMode="equals"></p-column>
+    <p-column field="quantity" header="Quantity" [filter]="true" filterMatchMode="equals"></p-column>
+    <p-column field="unitOfMeasurement" header="Unit Of Measurement" [filter]="true" filterMatchMode="equals"></p-column>
+    <p-column field="location" header="Location" [filter]="true" filterMatchMode="equals"></p-column>
+    <p-column field="status" header="Status" [filter]="true" filterMatchMode="equals"></p-column>
+    <p-column header="Action">
+        <ng-template let-car="rowData" pTemplate="body">
+            <button type="button" pButton (click)="selectCar(car)" icon="fa-fa-edit"></button>
+        </ng-template>
+    </p-column>
+</p-dataTable>
+
 
 
 </div>
