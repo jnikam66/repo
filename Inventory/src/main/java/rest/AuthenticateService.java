@@ -1,10 +1,12 @@
 package rest;
 
 import java.sql.SQLException;
+import java.util.Collection;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.transaction.SystemException;
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
@@ -46,7 +48,7 @@ public class AuthenticateService {
                         SecurityException, SystemException {
                 String result = "Registering User...";
                 try {
-                        entityManager.getTransaction().begin();
+                        
                         entityManager.persist(userEntityRecord);
                         entityManager.getTransaction().commit();
                         result = "Transaction Complete";
@@ -76,5 +78,11 @@ public class AuthenticateService {
 
                 result = "Transaction Complete";
                 return result;
+        }
+        @GET
+        @Path("/getAllUsers/")
+        public Collection<UserEntity> getAllUsers() throws ClassNotFoundException, SQLException {
+            Query query = entityManager.createNativeQuery("SELECT * FROM User u");
+            return (Collection<UserEntity>) query.getResultList();
         }
 }

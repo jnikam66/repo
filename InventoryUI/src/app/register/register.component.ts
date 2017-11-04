@@ -5,26 +5,37 @@ import {Response} from "@angular/http";
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
+  providers : [RegisterService]
 })
 export class RegisterComponent implements OnInit {
 
   constructor(private registerService: RegisterService) { }
-private user:{
-  firstName: null,
-  lastName : null,
-  username: null,
-  password:null ,
-  email:null,
-  company:null,
-  country:null,
-  contactNo:null
-}
+
+  firstName: string;
+  lastName : string;
+  username: string;
+  password:string;
+  email:string;
+  company:string;
+  country:string;
+  contactNo:string;
+
   ngOnInit() {
   }
 
   registerUser(){
-    this.registerService.registerUser(this.user).then((data: Response) => {
+    let user = {
+        //firstName: this.firstName,
+        //lastName: this.lastName,
+        username: this.username,
+        password: this.password,
+        email: this.email,
+        company: this.company,
+        country: this.country,
+        contactno: this.contactNo
+      }
+    this.registerService.registerUser(user).then((data: Response) => {
         data;
     }).catch((err) => {
             console.log("loadData Error", err);

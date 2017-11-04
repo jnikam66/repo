@@ -31,8 +31,8 @@ public class UserEntity implements Serializable{
 	@Column(name="EMAIL")
 	private String email;
 	
-	@Column(name="CONTACTNUMBER")
-	private String contactNumber;
+	@Column(name="CONTACTNO")
+	private String contactno;
 	
 	@Column(name="HASHKEY")
 	private String hashKey;
@@ -91,12 +91,12 @@ public class UserEntity implements Serializable{
 		this.email = email;
 	}
 
-	public String getContactNumber() {
-		return contactNumber;
+		public String getContactno() {
+		return contactno;
 	}
 
-	public void setContactNumber(String contactNumber) {
-		this.contactNumber = contactNumber;
+	public void setContactno(String contactno) {
+		this.contactno = contactno;
 	}
 
 	public String getHashKey() {

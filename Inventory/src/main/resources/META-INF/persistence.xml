@@ -8,7 +8,7 @@ http://java.sun.com/xml/ns/persistence/persistence_2_1.xsd">
 		transaction-type="RESOURCE_LOCAL">
 
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-		<class>entities.User</class>
+		<class>entities.UserEntity</class>
 		<class>entities.Inventory</class>
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
