@@ -7,26 +7,26 @@
   </div>
 </nav>
 <div class="container">
-  <form>
+  <form #registerForm = "ngForm" (ngSubmit)="registerUser()>
     <div class="form-group">
       <label for="fname" style="padding-right: 62px">First Name</label>
-      <input type="text" id="fname" name="firstname" >
+      <input type="text" [(ngModel)]="user.firstName" id="fname" name="firstname" >
     </div>
   <div class="form-group">
     <label for="lname" style="padding-right: 63px">Last Name</label>
-    <input type="text" id="lname" name="lastname" >
+    <input type="text" id="lname" [(ngModel)]="user.lastName" ="lastname" >
 </div>
 <div class="form-group">
   <label for="username" style="padding-right: 67px">Username</label>
-  <input type="text" id="username" name="username">
+  <input type="text" id="username" [(ngModel)]="user.username" name="username">
 </div>
 <div class="form-group">
   <label for="password"style="padding-right: 68px">Password</label>
-  <input type="password" id="password" name="password">
+  <input type="password" id="password" [(ngModel)]="user.password" name="password">
 </div>
 <div class="form-group">
   <label for="email" style="padding-right: 97px">Email</label>
-  <input type="text" id="email" name="email">
+  <input type="text" id="email" [(ngModel)]="user.email" name="email">
 </div>
 <div class="form-group">
   <label for="role" style="padding-right: 62px">User Class</label>
@@ -39,15 +39,15 @@
 </div>
 <div class="form-group">
   <label for="company" style="padding-right: 6px">Organization Name</label>
-  <input type="text" id="company" name="company">
+  <input type="text" id="company" [(ngModel)]="user.company" name="company">
 </div>
 <div class="form-group">
   <label for="country" style="padding-right: 79px">Country</label>
-  <input type="text" id="country" name="country">
+  <input type="text" id="country" [(ngModel)]="user.country" name="country">
 </div>
 <div class="form-group">
   <label for="contactNo" style="padding-right: 24px">Contact Number</label>
-  <input type="text" id="contactNo" name="contactNo">
+  <input type="text" id="contactNo"[(ngModel)]="user.contactNo" name="contactNo">
 </div>
 
     <input type="submit" value="Submit">

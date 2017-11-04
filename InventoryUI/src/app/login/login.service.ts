@@ -13,12 +13,12 @@ export class LoginService {
    constructor (private http: Http) {}
 
      isAuthenticate(username:string,password:string) : Observable<boolean> {
-     const headers = new Headers();
-     headers.append('Access-Control-Allow-Headers', 'Content-Type');
-     headers.append('Access-Control-Allow-Methods', 'GET');
-     headers.append('Access-Control-Allow-Origin', '*');
+     const header = new Headers();
+     header.append('Access-Control-Allow-Headers', 'Content-Type');
+     header.append('Access-Control-Allow-Methods', 'GET');
+     header.append('Access-Control-Allow-Origin', '*');
          // ...using get request
-         return this.http.get(this.url+'/'+username+'/'+password,{headers: headers})
+         return this.http.get(this.url+'/'+username+'/'+password,{headers: header})
                         // ...and calling .json() on the response to return data
                          .map((res:Response) => res.json())
                          //...errors if any

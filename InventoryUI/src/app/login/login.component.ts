@@ -18,16 +18,16 @@ export class LoginComponent implements OnInit {
   }
 
   authenticate(){
-  //  this.loginService.isAuthenticate(this.username,this.password)
-          //                 .subscribe(
-                      //         loggedIn =>{
-                                 this.loggedIn = true;
+   this.loginService.isAuthenticate(this.username,this.password)
+                           .subscribe(
+                               loggedIn =>{
+                                 this.loggedIn = loggedIn;
                                  this.login(this.loggedIn);
-                          //     }, //Bind to view
-//err => {
+                             },
+                            err => {
                                     // Log errors if any
-                                //    console.log(err);
-                              //  });
+                                console.log(err);
+                              });
   }
   login(isLoggedIn){
     this.authService.login().subscribe(() => {
