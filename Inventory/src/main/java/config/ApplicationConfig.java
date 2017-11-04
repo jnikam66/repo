@@ -8,6 +8,7 @@ import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
 import rest.AuthenticateService;
+import rest.InventoryItemService;
 import rest.InventoryService;
 
 @ApplicationPath("")
@@ -17,6 +18,7 @@ public class ApplicationConfig extends Application {
 	public ApplicationConfig() {
 		singletons.add(new AuthenticateService());
 		singletons.add(new InventoryService());
+		singletons.add(new InventoryItemService());
 	}
 
 	

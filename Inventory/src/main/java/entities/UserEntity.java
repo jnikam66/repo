@@ -9,39 +9,62 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="User")
-@SuppressWarnings("unused")
+@Table(name="USER")
 public class UserEntity implements Serializable{
+	private static final long serialVersionUID = 1L;
+
 	@Id
-	@Column(name="USERNAME")
+	@Column(name = "USERNAME")
 	private String username;
 	
-	@Column(name="PASSWORD")
+	private String firstname;
+	
+	private String lastname;
+	
 	private String password;
 	
-	@Column(name="ACCESSLEVEL")
 	private String accessLevel;
 	
-	@Column(name="COMPANY")
 	private String company;
 	
-	@Column(name="COUNTRY")
 	private String country;
 	
-	@Column(name="EMAIL")
 	private String email;
 	
-	@Column(name="CONTACTNO")
-	private String contactno;
+	private String contactNumber;
 	
-	@Column(name="HASHKEY")
 	private String hashKey;
 	
-	@Column(name="ISACTIVE")
 	private Boolean isActive;
 	
-	@Column(name="PROFILEPICTURE")
-	private Blob profilePicture;
+	public String getLocation() {
+		return location;
+	}
+	
+	public String getFirstname() {
+		return firstname;
+	}
+
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+
+	public String getLastname() {
+		return lastname;
+	}
+
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
+
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	private String location;
+	
+	//private Blob profilePicture;
 
 	public String getUsername() {
 		return username;
@@ -91,12 +114,12 @@ public class UserEntity implements Serializable{
 		this.email = email;
 	}
 
-		public String getContactno() {
-		return contactno;
+	public String getContactNumber() {
+		return contactNumber;
 	}
 
-	public void setContactno(String contactno) {
-		this.contactno = contactno;
+	public void setContactNumber(String contactNumber) {
+		this.contactNumber = contactNumber;
 	}
 
 	public String getHashKey() {
@@ -115,11 +138,11 @@ public class UserEntity implements Serializable{
 		this.isActive = isActive;
 	}
 
-	public Blob getProfilePicture() {
+	/*public Blob getProfilePicture() {
 		return profilePicture;
 	}
 
 	public void setProfilePicture(Blob profilePicture) {
 		this.profilePicture = profilePicture;
-	}
+	}*/ 
 }
