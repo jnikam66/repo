@@ -37,23 +37,29 @@ public class InventoryService {
         EntityManager entityManager = emf.createEntityManager();
 
         @GET
-        @Path("/{username}")
+        @Path("/getInventoryDetails/{username}")
         public HashMap<String, InventoryEntity> getInventoryDetails(@PathParam("username") String username) throws ClassNotFoundException, SQLException {
-        		Query query = null;
         		UserEntity userEntityRecord = entityManager.find(UserEntity.class, username);
-        		//List<InventoryEntity> allitems;
         		HashMap<String, InventoryEntity> mapOfInventoryIdAndRecord = new HashMap<String, InventoryEntity>();
+        		
+        		TypedQuery<InventoryEntity> query = null;
+        		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+                CriteriaQuery<InventoryEntity> q = cb.createQuery(InventoryEntity.class);
+                Root<InventoryEntity> c = q.from(InventoryEntity.class);
         		
         		if(userEntityRecord != null) {
         			if(userEntityRecord.getAccessLevel().equalsIgnoreCase("Admin")) {
-        				query = entityManager.createNativeQuery("select * from inventory ");
+        				q.select(c);
         			}else if(userEntityRecord.getAccessLevel().equalsIgnoreCase("Manager")) {
-        				query = entityManager.createNativeQuery("select * from inventory inv where upper(inv.company) = :company ");
-        				query.setParameter("company", userEntityRecord.getCompany().toUpperCase());
+        				q.select(c).where(cb.equal(c.get("company"), userEntityRecord.getCompany()));	
         			}else if(userEntityRecord.getAccessLevel().equalsIgnoreCase("Employee")) {
-        				query = entityManager.createNativeQuery("select * from inventory inv where upper(inv.company) = :company && upper(inv.location) = :loc");
-        				query.setParameter("company", userEntityRecord.getCompany().toUpperCase());
-        				query.setParameter("loc", userEntityRecord.getLocation().toUpperCase());
+        				//query = entityManager.createNativeQuery("select * from inventory inv where upper(inv.company) = :company && upper(inv.location) = :loc");
+        				//query.setParameter("company", userEntityRecord.getCompany().toUpperCase());
+        				//query.setParameter("loc", userEntityRecord.getLocation().toUpperCase());
+        				
+        				ParameterExpression<String> company = cb.parameter(String.class);
+        				ParameterExpression<String> location = cb.parameter(String.class);
+        				q.select(c).where(cb.equal(c.get("company"), userEntityRecord.getCompany()), cb.equal(c.get("location"), userEntityRecord.getLocation()));
         			}
         		}
         	
@@ -67,7 +73,8 @@ public class InventoryService {
 				
                 TypedQuery<InventoryEntity> query = entityManager.createQuery(q);
                 */
-                
+        		query = entityManager.createQuery(q);       
+        		
         		if(query.getResultList() != null && query.getResultList().size() >0) {
         			List<InventoryEntity> listOfAllEntities = query.getResultList();
         			for(InventoryEntity entity : listOfAllEntities) {
