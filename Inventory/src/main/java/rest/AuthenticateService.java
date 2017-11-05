@@ -64,10 +64,9 @@ public class AuthenticateService {
 	@SuppressWarnings("unchecked")
 	@GET
 	@Path("/getAllUsers/{username}")
-	public HashMap<String, UserEntity> getAllUsers(@PathParam("username") String username) throws ClassNotFoundException, SQLException {
-		
-		HashMap<String, UserEntity> mapOfUsernameAndRecord = new HashMap<String, UserEntity>();
+	public List<UserEntity> getAllUsers(@PathParam("username") String username) throws ClassNotFoundException, SQLException {
 		UserEntity userEntityRecord = entityManager.find(UserEntity.class, username);
+		List<UserEntity> listOfAllEntities = null;
 		
 		TypedQuery<UserEntity> query = null;
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
@@ -81,12 +80,9 @@ public class AuthenticateService {
 		}
 		query = entityManager.createQuery(q);
 		if(query.getResultList() != null && query.getResultList().size() >0) {
-			List<UserEntity> listOfAllEntities = query.getResultList();
-			for(UserEntity entity : listOfAllEntities) {
-				mapOfUsernameAndRecord.put(entity.getUsername(), entity);
-			}
+			listOfAllEntities = query.getResultList();
 		}
-		return mapOfUsernameAndRecord;
+		return listOfAllEntities;
 	}
 	
 	@Transactional() 
@@ -159,7 +155,7 @@ public class AuthenticateService {
                 	 }
                      
                     // user.setProfilePicture(userEntityRecord.getIsActive());
-                	 entityManager.persist(updateUser);
+                	 entityManager.merge(updateUser);
                      entityManager.getTransaction().commit();
 
                      result = "User Updated!!";

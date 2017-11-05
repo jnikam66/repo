@@ -94,7 +94,6 @@ public class InventoryItemService {
         				entityManager.persist(inventoryItemRecord);
                         entityManager.getTransaction().commit();
                         result = "InventoryItem added successfully!!";
-                        entityManager.close();  
         			}    				      				
         		}
         	}catch(Exception e) {
@@ -145,7 +144,7 @@ public class InventoryItemService {
 	     	           	 }
 
            	          inventoryItem.setLastupdatedby(user.getUsername());
-           	          entityManager.persist(inventoryItem);
+           	          entityManager.merge(inventoryItem);
            	          entityManager.getTransaction().commit();
                       result = "Transaction Complete"; 
                     }else {
@@ -173,17 +172,12 @@ public class InventoryItemService {
         	    result = validateInventory(user, inventory);
         		if(result == null){
         			entityManager.getTransaction().begin();
-        			Query query = entityManager.createNativeQuery("select * from inventoryitem inv where upper(inv.Id) = :itemId && upper(inv.inventoryid) = :invId");
-        			query.setParameter("itemId", itemId.toUpperCase());
-    				query.setParameter("invId", inventoryId.toUpperCase());
+        			InventoryItemEntity inventoryItem = entityManager.find(InventoryItemEntity.class, itemId);
         			
-    				if(query.getResultList() != null && query.getResultList().size() >0) {
-    					InventoryItemEntity inventoryItem = (InventoryItemEntity) query.getResultList().get(0);
-    					
+    				if(inventoryItem != null) {
     					 entityManager.remove(inventoryItem);
     	                 entityManager.getTransaction().commit();
     	                 result = "Inventory deleted successfully!!";
-    	                 entityManager.close();
             		}else {
             			 result = "Inventory Item not found!!";
             		}
