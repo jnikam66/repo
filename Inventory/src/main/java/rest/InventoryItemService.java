@@ -40,20 +40,24 @@ public class InventoryItemService {
 
         @SuppressWarnings("unchecked")
 		@GET
-        @Path("/{username}/{inventoryId}")
+        @Path("/getInventoryItemDetails/{username}/{inventoryId}")
         public List<InventoryItemEntity> getInventoryItemDetails( @PathParam("username") String username, @PathParam("inventoryId") String inventoryId)
                         throws ClassNotFoundException, SQLException {    
         	
-    		List<InventoryItemEntity> listOfAllEntities = null;    		
+    		List<InventoryItemEntity> listOfAllEntities = null;  
+    		
     		try {
     			InventoryEntity inventory = entityManager.find(InventoryEntity.class, inventoryId);
     			UserEntity user = entityManager.find(UserEntity.class, username);
     			String validation = validateInventory(user, inventory);
     			
     			if(validation == null) {
-    				Query query = entityManager.createNativeQuery("select * from inventoryitem inv where upper(inv.company) = :company && upper(inv.inventoryid) = :invId");
-    				query.setParameter("company", user.getCompany().toUpperCase());
-    				query.setParameter("invId", inventoryId);
+    				TypedQuery<InventoryItemEntity> query = null;
+            		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+                    CriteriaQuery<InventoryItemEntity> q = cb.createQuery(InventoryItemEntity.class);
+                    Root<InventoryItemEntity> c = q.from(InventoryItemEntity.class);
+                    q.select(c).where(cb.equal(c.get("inventoryid"), inventoryId));
+    				query = entityManager.createQuery(q);
     				
     				if(query.getResultList() != null && query.getResultList().size() > 0) {
             			listOfAllEntities = query.getResultList();
