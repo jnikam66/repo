@@ -9,6 +9,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import javax.transaction.SystemException;
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
@@ -64,14 +68,18 @@ public class AuthenticateService {
 		
 		HashMap<String, UserEntity> mapOfUsernameAndRecord = new HashMap<String, UserEntity>();
 		UserEntity userEntityRecord = entityManager.find(UserEntity.class, username);
-		Query query = null;
+		
+		TypedQuery<UserEntity> query = null;
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<UserEntity> q = cb.createQuery(UserEntity.class);
+        Root<UserEntity> c = q.from(UserEntity.class);
 		
 		if(userEntityRecord.getAccessLevel().equalsIgnoreCase("Admin")) {
-			query = entityManager.createNativeQuery("select * from User ");
+			q.select(c);			
 		}else if(userEntityRecord.getAccessLevel().equalsIgnoreCase("Manager")) {
-			query = entityManager.createNativeQuery("select * from User inv where upper(inv.company) = :company ");
-			query.setParameter("company", userEntityRecord.getCompany().toUpperCase());
+			q.select(c).where(cb.equal(c.get("company"), userEntityRecord.getCompany()));		
 		}
+		query = entityManager.createQuery(q);
 		if(query.getResultList() != null && query.getResultList().size() >0) {
 			List<UserEntity> listOfAllEntities = query.getResultList();
 			for(UserEntity entity : listOfAllEntities) {
@@ -88,11 +96,11 @@ public class AuthenticateService {
 	public String register(UserEntity userEntityRecord) throws Exception, SecurityException, SystemException, HibernateException {
 		String result = "Registering User...";
 		try {
-			entityManager.getTransaction().begin(); 
-				entityManager.persist(userEntityRecord); 
-				entityManager.getTransaction().commit();
-				result = "Transaction Complete";
-			entityManager.close();
+			entityManager.getTransaction().begin();
+			entityManager.persist(userEntityRecord); 
+			entityManager.getTransaction().commit();
+			result = "Transaction Complete";
+			//entityManager.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = e.getMessage();
@@ -108,7 +116,6 @@ public class AuthenticateService {
     		 throws Exception, SecurityException, SystemException {
              String result = "Updating User...";
              Boolean allowUpdate = true;
-             UserEntity user;
              try {
             	 UserEntity loggedinUser = entityManager.find(UserEntity.class, username);
             	 UserEntity updateUser = entityManager.find(UserEntity.class, userEntityRecord.getUsername());
@@ -141,8 +148,8 @@ public class AuthenticateService {
                 	 if(userEntityRecord.getEmail() != null) {
                 		 updateUser.setEmail(userEntityRecord.getEmail());
                 	 }
-                	 if(userEntityRecord.getContactNumber() != null) {
-                		 updateUser.setContactNumber(userEntityRecord.getContactNumber());
+                	 if(userEntityRecord.getcontactno() != null) {
+                		 updateUser.setcontactno(userEntityRecord.getcontactno());
                 	 }
                 	 if(userEntityRecord.getHashKey() != null) {
                 		 updateUser.setHashKey(userEntityRecord.getHashKey());
@@ -152,7 +159,7 @@ public class AuthenticateService {
                 	 }
                      
                     // user.setProfilePicture(userEntityRecord.getIsActive());
-
+                	 entityManager.persist(updateUser);
                      entityManager.getTransaction().commit();
 
                      result = "User Updated!!";
