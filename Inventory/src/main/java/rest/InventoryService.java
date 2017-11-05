@@ -38,9 +38,10 @@ public class InventoryService {
 
         @GET
         @Path("/getInventoryDetails/{username}")
-        public HashMap<String, InventoryEntity> getInventoryDetails(@PathParam("username") String username) throws ClassNotFoundException, SQLException {
+        public List<InventoryEntity> getInventoryDetails(@PathParam("username") String username) throws ClassNotFoundException, SQLException {
         		UserEntity userEntityRecord = entityManager.find(UserEntity.class, username);
-        		HashMap<String, InventoryEntity> mapOfInventoryIdAndRecord = new HashMap<String, InventoryEntity>();
+        		List<InventoryEntity> listOfAllEntities = null;
+        		//HashMap<String, InventoryEntity> mapOfInventoryIdAndRecord = new HashMap<String, InventoryEntity>();
         		
         		TypedQuery<InventoryEntity> query = null;
         		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
@@ -53,41 +54,25 @@ public class InventoryService {
         			}else if(userEntityRecord.getAccessLevel().equalsIgnoreCase("Manager")) {
         				q.select(c).where(cb.equal(c.get("company"), userEntityRecord.getCompany()));	
         			}else if(userEntityRecord.getAccessLevel().equalsIgnoreCase("Employee")) {
-        				//query = entityManager.createNativeQuery("select * from inventory inv where upper(inv.company) = :company && upper(inv.location) = :loc");
-        				//query.setParameter("company", userEntityRecord.getCompany().toUpperCase());
-        				//query.setParameter("loc", userEntityRecord.getLocation().toUpperCase());
-        				
-        				ParameterExpression<String> company = cb.parameter(String.class);
-        				ParameterExpression<String> location = cb.parameter(String.class);
         				q.select(c).where(cb.equal(c.get("company"), userEntityRecord.getCompany()), cb.equal(c.get("location"), userEntityRecord.getLocation()));
         			}
         		}
         	
-        		/*
-                CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-
-                CriteriaQuery<InventoryEntity> q = cb.createQuery(InventoryEntity.class);
-                Root<InventoryEntity> c = q.from(InventoryEntity.class);
-                //ParameterExpression<String> p = cb.parameter(String.class);
-                q.select(c).where(cb.equal(c.get("createdby"), username));
-				
-                TypedQuery<InventoryEntity> query = entityManager.createQuery(q);
-                */
         		query = entityManager.createQuery(q);       
         		
         		if(query.getResultList() != null && query.getResultList().size() >0) {
-        			List<InventoryEntity> listOfAllEntities = query.getResultList();
-        			for(InventoryEntity entity : listOfAllEntities) {
-        				mapOfInventoryIdAndRecord.put(entity.getInventoryid(), entity);
-        			}
+        			listOfAllEntities = query.getResultList();
+        			//for(InventoryEntity entity : listOfAllEntities) {
+        				//mapOfInventoryIdAndRecord.put(entity.getInventoryid(), entity);
+        			//}
         		}
 
-                return mapOfInventoryIdAndRecord;
+                return listOfAllEntities;
         }
 
         @Transactional
         @POST
-        @Path("/add/{username}")
+        @Path("/addInventory/{username}")
         @Consumes(MediaType.APPLICATION_JSON)
         public String addInventory(InventoryEntity inventoryRecord, @PathParam("username") String username)
         		throws Exception, SecurityException, SystemException {
@@ -120,11 +105,8 @@ public class InventoryService {
         				entityManager.persist(inventoryRecord);
                         entityManager.getTransaction().commit();
                         result = "Inventory added successfully!!";
-                        entityManager.close();
         			}
 					
-        		}else {
-        			result = "Cannot locate createdby";
         		}
         	}catch(Exception e) {
         		e.printStackTrace();
@@ -135,12 +117,13 @@ public class InventoryService {
 
         @Transactional
         @PUT
-        @Path("/update/{username}")
+        @Path("/updateInventory/{username}")
         @Consumes(MediaType.APPLICATION_JSON)
         public String updateInventory(InventoryEntity record, @PathParam("username") String username) 
         		throws Exception, SecurityException, SystemException {
         	String result = "Updating Inventory...";
         	try {  
+        		entityManager.getTransaction().begin();
         		UserEntity userEntityRecord = entityManager.find(UserEntity.class, username);
         		InventoryEntity inventory = entityManager.find(InventoryEntity.class, record.getInventoryid());
         		result = validateInventory(userEntityRecord, record);
@@ -152,9 +135,8 @@ public class InventoryService {
        	           		 inventory.setNumberofitems(record.getNumberofitems());
        	           	 }
        	           	 inventory.setLastupdatedby(username);
-       	           	 
-       	          entityManager.getTransaction().begin();
-       	          entityManager.persist(record);
+       	           	        	          
+       	          entityManager.merge(inventory);
        	          entityManager.getTransaction().commit();
                   result = "Transaction Complete"; 
         		}
@@ -168,7 +150,7 @@ public class InventoryService {
 
         @Transactional
         @DELETE
-        @Path("/delete/{username}/{inventoryId}")
+        @Path("/deleteInventory/{username}/{inventoryId}")
         @Consumes(MediaType.APPLICATION_JSON)
         public String deleteInventory( @PathParam("username") String username, @PathParam("inventoryId") String inventoryId) 
         		throws Exception, SecurityException, SystemException {
