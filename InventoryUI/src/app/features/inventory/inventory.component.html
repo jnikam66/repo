@@ -7,14 +7,14 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Modal Header</h4>
+          <h4 class="modal-title">Add Inventory Items</h4>
         </div>
         <div class="modal-body">
           <form #inventoryForm = "ngForm" (ngSubmit)="saveNewInventory()">
             <label for="itemName">Item Name:</label>
-            <input type="text" required [(ngModel)]="model.itemName" name="itemName" class="form-control" id="itemName">
+            <input type="text" required [(ngModel)]="itemName" name="itemName" class="form-control" id="itemName">
             <label for="quantity">Quantity:</label>
-            <input type="text" required [(ngModel)]="model.quantity" name="quantity" class="form-control" id="quantity">
+            <input type="text" required [(ngModel)]="quantity" name="quantity" class="form-control" id="quantity">
             <div class="form-group col-sm-12 col-md-4"><label style="margin-left: -17px;">Unit of Meausrement</label>
               <div class="input-group">
                 <span class="input-group-addon"><i></i></span>
@@ -24,11 +24,11 @@
               </div>
             </div>
             <label for="quantity" style="margin-left: -192px; margin-top: 61px;">Item Description:</label>
-            <input type="text" required name="description" [(ngModel)]="model.description" class="form-control" id="description">
+            <input type="text" required name="description" [(ngModel)]="description" class="form-control" id="description">
             <label for="location">Location:</label>
-            <input type="text" required name="location"[(ngModel)]="model.location" class="form-control" id="location">
+            <input type="text" required name="location"[(ngModel)]="location" class="form-control" id="location">
             <label for="costperunit">Cost per Unit:</label>
-            <input type="text"required name="costperunit" [(ngModel)]="model.costPerUnit" class="form-control" id="costperunit">
+            <input type="text"required name="costperunit" [(ngModel)]="costPerUnit" class="form-control" id="costperunit">
             <div style="margin-left: 437px; margin-top: 12px;">
               <button type="submit" class="btn btn-default">Save</button>
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -64,7 +64,7 @@
     <p-column field="itemName" [sortable]="true" header="Item Name" [filter]="true" filterPlaceholder="Search"></p-column>
     <p-column field="description" [sortable]="true" header="Item description" [filter]="true" filterMatchMode="equals"></p-column>
     <p-column field="quantity" [sortable]="true" header="Quantity" [filter]="false" filterMatchMode="equals"></p-column>
-    <p-column field="unitOfMeasurement" [sortable]="true" header="Unit Of Measurement" [filter]="false" filterMatchMode="equals"></p-column>
+    <p-column field="unitOfMeasure" [sortable]="true" header="Unit Of Measurement" [filter]="false" filterMatchMode="equals"></p-column>
     <p-column field="location" [sortable]="true" header="Location" [filter]="true" filterMatchMode="equals"></p-column>
     <p-column field="status" [sortable]="true" header="Status" [filter]="true" filterMatchMode="equals"></p-column>
     <p-column header="Action">

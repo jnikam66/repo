@@ -6,14 +6,14 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class AdminService {
 
-  private url = 'http://localhost:8080/org.inventory/userServices/getAllUsers';
+  private url = '../inventory/userServices/getAllUsers';
 
 
   constructor(private http: Http) { }
 
-  getUserDetails(){
+  getUserDetails(username:string){
 
-    return this.http.get(this.url)
+    return this.http.get(this.url+"/"+username )
                    // ...and calling .json() on the response to return data
                     .map((response:Response) => response.json())
 

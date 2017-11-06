@@ -10,11 +10,11 @@
   <form #registerForm="ngForm" (ngSubmit)="registerUser()">
     <div class=" form-group ">
       <label for="fname " style="padding-right: 62px ">First Name</label>
-      <input type="text " [(ngModel)]="firstName " id="fname " name="firstname " >
+      <input type="text " [(ngModel)]="firstname " id="fname " name="firstname " >
     </div>
   <div class="form-group ">
     <label for="lname " style="padding-right: 63px ">Last Name</label>
-    <input type="text " id="lname" [(ngModel)]="lastName" name="lastname " >
+    <input type="text " id="lname" [(ngModel)]="lastname" name="lastname " >
 </div>
 <div class="form-group ">
   <label for="username " style="padding-right: 67px ">Username</label>
@@ -47,7 +47,7 @@
 </div>
 <div class="form-group ">
   <label for="contactNo " style="padding-right: 24px ">Contact Number</label>
-  <input type="text " id="contactNo "[(ngModel)]="contactNo " name="contactNo ">
+  <input type="text " id="contactNo "[(ngModel)]="contactNumber " name="contactNo ">
 </div>
     <button type="submit" class="btn btn-default">Submit</button>
 

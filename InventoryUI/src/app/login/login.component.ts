@@ -5,8 +5,7 @@ import { AuthService } from './../auth.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
-  providers : [LoginService]
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
   loggedIn: boolean;
@@ -19,20 +18,20 @@ export class LoginComponent implements OnInit {
 
   authenticate(){
    this.loginService.isAuthenticate(this.username,this.password)
-                           .subscribe(
+                         .subscribe(
                                loggedIn =>{
-                                 this.loggedIn = loggedIn;
+                                 this.loggedIn =loggedIn; //loggedIn;
                                  this.login(this.loggedIn);
                              },
                             err => {
                                     // Log errors if any
-                                console.log(err);
+                               console.log(err);
                               });
   }
   login(isLoggedIn){
     this.authService.login().subscribe(() => {
       if (isLoggedIn) {
-        let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/features/inventory';
+        let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/features/inventoryList';
         this.router.navigate([redirect]);
       }
     });

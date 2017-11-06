@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from './admin.service';
 import { FormGroup, FormControl} from '@angular/forms'
-
+import {LoginService} from  './../../login/login.service';
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
@@ -16,10 +16,10 @@ export class AdminComponent implements OnInit {
     company:''
   }]
 
-  constructor(private adminService : AdminService) { }
+  constructor(private adminService : AdminService, private loginService: LoginService) { }
 
   ngOnInit() {
-    this.adminService.getUserDetails().subscribe(data =>  this.users = data);
+    this.adminService.getUserDetails(this.loginService.username).subscribe(data =>  this.users = data);
   }
 
   onSubmit(){

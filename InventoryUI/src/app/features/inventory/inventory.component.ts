@@ -2,12 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import { FormsModule }   from '@angular/forms';
-
+import { ActivatedRoute } from '@angular/router';
+import {InventoryService} from './inventory.service';
+import {LoginService } from './../../login/login.service';
 @Component({
   selector: 'app-inventory',
   templateUrl: './inventory.component.html',
-  styleUrls: ['./inventory.component.css']
+  styleUrls: ['./inventory.component.css'],
+  providers:[InventoryService]
 })
+
 
 export class InventoryComponent implements OnInit {
   unitsOfMeasurement = ['Kilogram(kgs)', 'Pounds(lbs)', 'Units', 'Millilitres(mls)'];
@@ -17,42 +21,59 @@ export class InventoryComponent implements OnInit {
     'And another choice for you.',
     'but wait! A third!'
   ];
-  private model: Array<any> = [{
+
+    quantity: string;
+    unitOfMeasurement: string;
+    itemName: string;
+    description: string;
+    location: string;
+    status:string;
+    costPerUnit : string;
+
+  private data: Array<any> = [{
     quantity: '',
-    unitOfMeasurement: '',
+    unitOfMeasure: '',
     itemName: '',
     description: '',
     location: '',
-    status:'',
-    costPerUnit : ''
-  }]
-  private data: Array<any> = [{
-    quantity: '2',
-    unitOfMeasurement: 'asd',
-    itemName: 'aadada',
-    description: 'dadadad',
-    location: 'adadada',
-    status:'Instock'
-  }, {
-    quantity: '3',
-    unitOfMeasurement: 'eee',
-    itemName: 'dddddd',
-    description: 'adadadad',
-    location: 'weeqeqeeqe',
-    status:'Damaged'
+    status:''
   }];
-  public constructor() {
-
+  private inventoryId;
+  public constructor(private route: ActivatedRoute, private inventoryService:InventoryService,private loginService : LoginService) {
+    this.inventoryId = this.route.snapshot.paramMap.get('id');
   }
+
+
+  public ngOnInit(): void {
+    this.inventoryService.getInventoryItems(this.loginService.username,this.inventoryId).subscribe(
+          data =>{
+            this.data = data; //loggedIn;
+        },
+       err => {
+               // Log errors if any
+          console.log(err);
+         });
+  }
+
   public saveNewInventory(){
-    this.model;
+    let model = {
+      quantity: this.quantity,
+      unitOfMeasurement: this.unitOfMeasurement,
+      itemName: this.itemName,
+      description: this.description,
+      location: this.location,
+      status:this.status,
+      costPerUnit : this.costPerUnit,
+      }
+    this.inventoryService.saveNewInventory(this.loginService.username,this.inventoryId,model).then((data: Response) => {
+        data;
+    }).catch((err) => {
+            console.log("loadData Error", err);
+    });
     console.log("Saving");
   }
   updateRecord(row){
     console.log("Updating");
-  }
-
-  public ngOnInit(): void {
   }
 
 }

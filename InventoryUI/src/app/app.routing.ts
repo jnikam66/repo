@@ -9,6 +9,10 @@ import { FeaturesComponent } from './features/features.component'
 import { ReportsComponent } from './features/reports/reports.component'
 import { AdminComponent } from './features/admin/admin.component'
 import {HomepageComponent} from './features/homepage/homepage.component'
+import {LocationComponent} from './features/location/location.component'
+import {MeasureComponent} from './features/measure/measure.component'
+import {StatusComponent} from './features/status/status.component'
+
 export const AppRoutes: any = [
     {path: '' , component : DashboardComponent },
     { path: 'login', component: LoginComponent },
@@ -19,9 +23,12 @@ export const AppRoutes: any = [
 	{ path: 'features', component: FeaturesComponent, canActivate: [AuthGuard],
 		children: [
 		  { path: '', redirectTo: 'inventoryList', pathMatch: 'full' },
-		  { path: 'inventory', component: InventoryComponent },
+		  { path: 'inventory/:id', component: InventoryComponent },
       { path: 'admin', component: AdminComponent },
-      { path: 'inventoryList', component: HomepageComponent}
+      { path: 'inventoryList', component: HomepageComponent},
+      { path: 'location', component: LocationComponent },
+      { path: 'measure', component: MeasureComponent },
+      { path: 'status', component: StatusComponent }
     ]
   }
 ];
