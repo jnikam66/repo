@@ -18,12 +18,13 @@ export const AppRoutes: any = [
     { path: 'login', component: LoginComponent },
     { path : 'register', component : RegisterComponent },
     //{ path : 'features', component : FeaturesComponent},
-    { path : 'reports', component :ReportsComponent},
+
 
 	{ path: 'features', component: FeaturesComponent, canActivate: [AuthGuard],
 		children: [
 		  { path: '', redirectTo: 'inventoryList', pathMatch: 'full' },
-		  { path: 'inventory/:id', component: InventoryComponent },
+      { path : 'reports', component :ReportsComponent},
+      { path: 'inventory/:id', component: InventoryComponent },
       { path: 'admin', component: AdminComponent },
       { path: 'inventoryList', component: HomepageComponent},
       { path: 'location', component: LocationComponent },
