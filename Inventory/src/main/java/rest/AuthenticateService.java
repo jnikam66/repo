@@ -61,6 +61,17 @@ public class AuthenticateService {
 		
 	}
 	
+	@GET
+	@Path("/getAllLocations")
+	public List<String> getAllLocations(){
+		List<String> listOfAllLocations = null;
+		Query query = entityManager.createNativeQuery("select DISTINCT(u.location) from User u");
+		if (query.getResultList()!= null && query.getResultList().size()>0) {
+			listOfAllLocations = (List<String>)query.getResultList();
+		}
+		return listOfAllLocations;
+	}
+	
 	@SuppressWarnings("unchecked")
 	@GET
 	@Path("/getAllUsers/{username}")
