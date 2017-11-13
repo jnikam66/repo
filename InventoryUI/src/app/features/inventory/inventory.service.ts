@@ -39,5 +39,24 @@ export class InventoryService {
             );
     });
   }
+  updateInventoryItem(username:string,inventoryid:string,data){
+    let that = this;
+    let body = JSON.stringify(data);
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+
+    return new Promise(function(resolve, reject) {
+        that.http.put(that.url+'/updateItem/'+ username+ '/' +inventoryid, body, options)
+            .subscribe(
+            (data: Response) => {
+                resolve(data);
+            },
+            error => {
+                reject(error);
+            }
+            );
+    });
+  }
+
 
 }

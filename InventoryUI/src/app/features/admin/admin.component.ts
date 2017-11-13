@@ -14,7 +14,18 @@ export class AdminComponent implements OnInit {
     username:'',
     accesslevel:'',
     company:''
+
   }]
+  private editModel = {
+    firstname:'',
+    lastname:'',
+    company:'',
+    country:'',
+    location:'',
+    email:'',
+    contactno:'',
+    username : ''
+  };
 
   constructor(private adminService : AdminService, private loginService: LoginService) { }
 
@@ -23,6 +34,23 @@ export class AdminComponent implements OnInit {
   }
 
   onSubmit(){
-    console.log('hello');
+    this.adminService.updateUser(this.editModel,this.loginService.username).then((data: Response) => {
+        data;
+    }).catch((err) => {
+            console.log("loadData Error", err);
+    });
+    console.log("Saving");
+
+  }
+
+  updateRecord(row){
+    this.editModel.firstname = row.firstname;
+    this.editModel.lastname = row.lastname;
+    this.editModel.company = row.company;
+    this.editModel.country = row.country;
+    this.editModel.location = row.location;
+    this.editModel.email = row.email;
+    this.editModel.contactno = row.contactno;
+    this.editModel.username = row.username;
   }
 }

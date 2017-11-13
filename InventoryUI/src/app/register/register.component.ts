@@ -12,6 +12,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(private registerService: RegisterService) { }
 
+  redirectToLogin:boolean;
   firstname: string;
   lastname : string;
   username: string;
@@ -33,13 +34,13 @@ export class RegisterComponent implements OnInit {
         email: this.email,
         company: this.company,
         country: this.country,
-        contactNumber: this.contactNumber
+        contactno: this.contactNumber
       }
     this.registerService.registerUser(user).then((data: Response) => {
-        data;
+      data;
     }).catch((err) => {
-            console.log("loadData Error", err);
-        });
+      console.log("loadData Error", err);
+    });
   }
 
 }

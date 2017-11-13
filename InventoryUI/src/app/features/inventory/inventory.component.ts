@@ -22,6 +22,17 @@ export class InventoryComponent implements OnInit {
     'but wait! A third!'
   ];
 
+  private editModel = {
+    itemid:'',
+    quantity: '',
+    unitOfMeasure: '',
+    itemName: '',
+    description: '',
+    location: '',
+    status:'',
+    costPerUnit : ''
+  };
+
     quantity: string;
     unitOfMeasurement: string;
     itemName: string;
@@ -57,6 +68,7 @@ export class InventoryComponent implements OnInit {
 
   public saveNewInventory(){
     let model = {
+
       quantity: this.quantity,
       unitOfMeasurement: this.unitOfMeasurement,
       itemName: this.itemName,
@@ -72,8 +84,29 @@ export class InventoryComponent implements OnInit {
     });
     console.log("Saving");
   }
+
+  onSubmit(){
+
+      this.inventoryService.updateInventoryItem(this.loginService.username,this.inventoryId,this.editModel).then((data: Response) => {
+          data;
+      }).catch((err) => {
+              console.log("loadData Error", err);
+      });
+      console.log("Saving");
+  }
+
   updateRecord(row){
-    console.log("Updating");
+    this.editModel.itemid = row.itemid;
+    this.editModel.quantity = row.quantity;
+    this.editModel.unitOfMeasure = row.unitOfMeasure;
+    this.editModel.itemName = row.itemName;
+    this.editModel.description = row.description;
+    this.editModel.location = row.location;
+    this.editModel.status = row.status;
+    this.editModel.costPerUnit = row.costPerUnit;
+
+
+
   }
 
 }
