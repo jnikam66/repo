@@ -48,8 +48,18 @@ public class InventoryItemEntity implements Serializable {
 	
 	private String createdby;
 	
+	private String initial_quantity;	
+	
 	public String getCreatedby() {
 		return createdby;
+	}
+
+	public String getInitial_quantity() {
+		return initial_quantity;
+	}
+
+	public void setInitial_quantity(String initial_quantity) {
+		this.initial_quantity = initial_quantity;
 	}
 
 	public void setCreatedby(String createdby) {

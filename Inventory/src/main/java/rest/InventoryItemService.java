@@ -134,6 +134,9 @@ public class InventoryItemService {
            	           		 inventoryItem.setItemName(record.getItemName());
            	           	 }
            	           	 if(record.getQuantity() != null) {
+           	           		 if(Integer.valueOf(inventoryItem.getInitial_quantity()) < Integer.valueOf(record.getQuantity())) {
+           	           			 result = "Error: Cannot set quantity greater than initial quantity!!";
+           	           		 }
            	           		 inventoryItem.setQuantity(record.getQuantity());
            	           	 }
            	           	 if(record.getStatus() != null) {
@@ -142,11 +145,16 @@ public class InventoryItemService {
 	           	         if(record.getUnitOfMeasure() != null) {
 	     	           		 inventoryItem.setUnitOfMeasure(record.getUnitOfMeasure());
 	     	           	 }
+	           	         if(record.getInitial_quantity() != null) {
+	     	           		 inventoryItem.setInitial_quantity(record.getInitial_quantity());
+	     	           	 }
 
-           	          inventoryItem.setLastupdatedby(user.getUsername());
-           	          entityManager.merge(inventoryItem);
-           	          entityManager.getTransaction().commit();
-                      result = "Transaction Complete"; 
+	           	         if(result == null) {
+	           	        	 inventoryItem.setLastupdatedby(user.getUsername());
+	              	          entityManager.merge(inventoryItem);
+	              	          entityManager.getTransaction().commit();
+	                         result = "Transaction Complete"; 
+	           	         }
                     }else {
                     	result = "Inventory item not found!!";
                     }
