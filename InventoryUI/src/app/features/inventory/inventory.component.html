@@ -1,6 +1,6 @@
 <div class="container example2">
   <div class="row" style="padding-top: 68px;padding-bottom: 5px; padding-left: 10px;"></div>
-  <button type="button" style="margin-top: 2px;float: right; width: -16px;height: 31px;margin-right: 6px;" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Inventory</button>
+  <button type="button" style="margin-top: 2px;float: right; width: -16px;height: 31px;margin-right: 6px;" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Inventory Item</button>
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
       <!-- Modal content-->
@@ -10,7 +10,7 @@
           <h4 class="modal-title">Add Inventory Items</h4>
         </div>
         <div class="modal-body">
-          <form #inventoryForm = "ngForm" (ngSubmit)="saveNewInventory()">
+          <form #inventoryForm = "ngForm" >
             <label for="itemName">Item Name:</label>
             <input type="text" required [(ngModel)]="itemName" name="itemName" class="form-control" id="itemName">
             <label for="quantity">Quantity:</label>
@@ -30,7 +30,7 @@
             <label for="costperunit">Cost per Unit:</label>
             <input type="text"required name="costperunit" [(ngModel)]="costPerUnit" class="form-control" id="costperunit">
             <div style="margin-left: 437px; margin-top: 12px;">
-              <button type="submit" class="btn btn-default">Save</button>
+              <button type="button" (click)="saveNewInventory()" class="btn btn-default" data-dismiss="modal">Save</button>
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
           </form>
@@ -66,7 +66,13 @@
     <p-column field="quantity" [sortable]="true" header="Quantity" [filter]="false" filterMatchMode="equals"></p-column>
     <p-column field="unitOfMeasure" [sortable]="true" header="Unit Of Measurement" [filter]="false" filterMatchMode="equals"></p-column>
     <p-column field="location" [sortable]="true" header="Location" [filter]="true" filterMatchMode="equals"></p-column>
-    <p-column field="status" [sortable]="true" header="Status" [filter]="true" filterMatchMode="equals"></p-column>
+    <p-column field="status" [sortable]="true" header="Status" [filter]="true" filterMatchMode="equals">
+      <ng-template let-row="rowData" pTemplate="body">
+      <div *ngIf="row.quantity>=5">{{row.status}}</div>
+      <div *ngIf="row.quantity<5" class="text-danger">{{row.status}}</div>
+      </ng-template>
+
+    </p-column>
     <p-column header="Action">
       <ng-template let-row="rowData" pTemplate="body">
         <button type="button" pButton (click)="updateRecord(row)" data-toggle="modal" data-target="#editModal"label="Edit"></button>
@@ -83,7 +89,7 @@
           <h4 class="modal-title">Edit Items</h4>
         </div>
         <div class="modal-body">
-          <form #inventoryForm = "ngForm" (ngSubmit)="onSubmit()">
+          <form #inventoryForm = "ngForm">
             <label for="itemName">Item Name:</label>
             <input type="text" required [(ngModel)]="editModel.itemName" name="itemName" class="form-control" id="itemName">
             <label for="quantity">Quantity:</label>
@@ -96,14 +102,16 @@
                 </select>
               </div>
             </div>
-            <label for="quantity" style="margin-left: -192px; margin-top: 61px;">Item Description:</label>
+            <label for="location">Ouantity Sold</label>
+            <input type="text" style="width:16%; "required name="sold"[(ngModel)]="sold" class="form-control" id="sold">
+            <label for="quantity" style="margin-left: -192px; margin-top: 15px;">Item Description:</label>
             <input type="text" required name="description" [(ngModel)]="editModel.description" class="form-control" id="description">
             <label for="location">Location:</label>
             <input type="text" required name="location"[(ngModel)]="editModel.location" class="form-control" id="location">
             <label for="costperunit">Cost per Unit:</label>
             <input type="text"required name="costperunit" [(ngModel)]="editModel.costPerUnit" class="form-control" id="costperunit">
             <div style="margin-left: 437px; margin-top: 12px;">
-              <button type="submit" class="btn btn-default" >Save</button>
+              <button type="submit" class="btn btn-default" (click)="onSubmit()" data-dismiss="modal" >Save</button>
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
           </form>

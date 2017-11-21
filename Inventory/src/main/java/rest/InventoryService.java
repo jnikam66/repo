@@ -57,7 +57,7 @@ public class InventoryService {
         				q.select(c).where(cb.equal(c.get("company"), userEntityRecord.getCompany()), cb.equal(c.get("location"), userEntityRecord.getLocation()));
         			}
         		}
-        	
+        		entityManager.getTransaction().begin();
         		query = entityManager.createQuery(q);       
         		
         		if(query.getResultList() != null && query.getResultList().size() >0) {
@@ -66,7 +66,7 @@ public class InventoryService {
         				//mapOfInventoryIdAndRecord.put(entity.getInventoryid(), entity);
         			//}
         		}
-
+        		 entityManager.getTransaction().commit();
                 return listOfAllEntities;
         }
 
@@ -104,6 +104,7 @@ public class InventoryService {
         				entityManager.getTransaction().begin();
         				entityManager.persist(inventoryRecord);
                         entityManager.getTransaction().commit();
+                        
                         result = "Inventory added successfully!!";
         			}
 					

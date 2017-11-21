@@ -15,8 +15,7 @@ import { InventoryComponent } from './inventory/inventory.component';
 import { ReportsComponent } from './reports/reports.component';
 import { FooterComponent } from './footer/footer.component';
 import { AdminComponent } from './admin/admin.component';
-import { HomepageComponent } from './homepage/homepage.component';
-import { CatalogComponent } from './catalog/catalog.component';
+import { HomepageComponent } from './homepage/homepage.component'; 
 import { MeasureComponent } from './measure/measure.component';
 import { LocationComponent } from './location/location.component';
 import { StatusComponent } from './status/status.component';
@@ -46,7 +45,6 @@ declarations: [
   FooterComponent,
   AdminComponent,
   HomepageComponent,
-  CatalogComponent,
   MeasureComponent,
   LocationComponent,
   StatusComponent

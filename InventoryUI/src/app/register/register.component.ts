@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {RegisterService} from './register.service'
 import {Response} from "@angular/http";
+import {Router} from "@angular/router"
 
 @Component({
   selector: 'app-register',
@@ -10,7 +11,7 @@ import {Response} from "@angular/http";
 })
 export class RegisterComponent implements OnInit {
 
-  constructor(private registerService: RegisterService) { }
+  constructor(private registerService: RegisterService,private router :Router) { }
 
   redirectToLogin:boolean;
   firstname: string;
@@ -37,7 +38,7 @@ export class RegisterComponent implements OnInit {
         contactno: this.contactNumber
       }
     this.registerService.registerUser(user).then((data: Response) => {
-      data;
+      this.router.navigate(['login'])
     }).catch((err) => {
       console.log("loadData Error", err);
     });

@@ -30,12 +30,16 @@ export class AdminComponent implements OnInit {
   constructor(private adminService : AdminService, private loginService: LoginService) { }
 
   ngOnInit() {
+    this.getUserDetails();
+  }
+
+  getUserDetails(){
     this.adminService.getUserDetails(this.loginService.username).subscribe(data =>  this.users = data);
   }
 
-  onSubmit(){
+    onSubmit(){
     this.adminService.updateUser(this.editModel,this.loginService.username).then((data: Response) => {
-        data;
+        this.getUserDetails();
     }).catch((err) => {
             console.log("loadData Error", err);
     });

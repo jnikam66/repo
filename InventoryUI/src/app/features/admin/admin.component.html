@@ -13,6 +13,7 @@
         <h4 class="modal-title">Edit User</h4>
       </div>
       <div class="modal-body">
+        <form #inventoryForm = "ngForm" >
         <label for="firstname">First Name</label>
         <input type="text" name="firstname" [(ngModel)]="editModel.firstname" class="form-control" id="firstname">
         <label for="lastname">Last Name</label>
@@ -25,11 +26,13 @@
         <input type="text" name="company"[(ngModel)]="editModel.company" class="form-control" id="company">
         <label for="country">Country</label>
         <input type="text" name="country" [(ngModel)]="editModel.country" class="form-control" id="country">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" (click)="onSubmit()">Save</button>
+        <div style="margin-left: 437px; margin-top: 12px;">
+        <button type="button" class="btn btn-default" (click)="onSubmit()" data-dismiss="modal">Save</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
+    </form>
+      </div>
+
     </div>
 
   </div>

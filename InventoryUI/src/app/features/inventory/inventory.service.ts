@@ -46,7 +46,7 @@ export class InventoryService {
     let options = new RequestOptions({ headers: headers });
 
     return new Promise(function(resolve, reject) {
-        that.http.put(that.url+'/updateItem/'+ username+ '/' +inventoryid, body, options)
+        that.http.put(that.url+'updateItem/'+ username+ '/' +inventoryid, body, options)
             .subscribe(
             (data: Response) => {
                 resolve(data);
